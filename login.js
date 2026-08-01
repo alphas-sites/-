@@ -1,18 +1,20 @@
-// =================================
+// =====================================
 // CLIENTE FÁCIL - LOGIN
-// =================================
+// =====================================
 
 
 // Abrir tela de cadastro
 
 function abrirCadastro(){
 
-    document.getElementById("login").classList.add("escondido");
+    document.getElementById("login")
+    .classList.add("escondido");
 
-    document.getElementById("cadastro").classList.remove("escondido");
+
+    document.getElementById("cadastro")
+    .classList.remove("escondido");
 
 }
-
 
 
 
@@ -20,25 +22,32 @@ function abrirCadastro(){
 
 function voltarLogin(){
 
-    document.getElementById("cadastro").classList.add("escondido");
+    document.getElementById("cadastro")
+    .classList.add("escondido");
 
-    document.getElementById("login").classList.remove("escondido");
+
+    document.getElementById("login")
+    .classList.remove("escondido");
 
 }
 
 
 
-
-
-// Criar conta
+// Criar conta da empresa
 
 function criarConta(){
 
-    let empresa = document.getElementById("nomeEmpresa").value;
 
-    let usuario = document.getElementById("novoUsuario").value;
+    const empresa =
+    document.getElementById("nomeEmpresa").value;
 
-    let senha = document.getElementById("novaSenha").value;
+
+    const usuario =
+    document.getElementById("novoUsuario").value;
+
+
+    const senha =
+    document.getElementById("novaSenha").value;
 
 
 
@@ -56,15 +65,29 @@ function criarConta(){
 
 
 
-    localStorage.setItem("empresa", empresa);
+    const dados = {
 
-    localStorage.setItem("usuario", usuario);
+        empresa: empresa,
 
-    localStorage.setItem("senha", senha);
+        usuario: usuario,
+
+        senha: senha
+
+    };
 
 
 
-    alert("Empresa cadastrada com sucesso!");
+    localStorage.setItem(
+
+        "clienteFacilUsuario",
+
+        JSON.stringify(dados)
+
+    );
+
+
+
+    alert("Conta criada com sucesso!");
 
 
 
@@ -76,39 +99,59 @@ function criarConta(){
 
 
 
-
 // Fazer login
 
 function login(){
 
 
-    let usuario = document.getElementById("usuario").value;
-
-    let senha = document.getElementById("senha").value;
-
+    const usuario =
+    document.getElementById("usuario").value;
 
 
-    let usuarioSalvo = localStorage.getItem("usuario");
+    const senha =
+    document.getElementById("senha").value;
 
-    let senhaSalva = localStorage.getItem("senha");
+
+
+    const dados =
+    JSON.parse(
+        localStorage.getItem("clienteFacilUsuario")
+    );
+
+
+
+    if(!dados){
+
+        alert("Nenhuma conta cadastrada!");
+
+        return;
+
+    }
 
 
 
     if(
-        usuario === usuarioSalvo &&
-        senha === senhaSalva
+        usuario === dados.usuario &&
+        senha === dados.senha
     ){
 
 
-        document.getElementById("login").classList.add("escondido");
+        document.getElementById("login")
+        .classList.add("escondido");
 
 
-        document.getElementById("sistema").classList.remove("escondido");
+        document.getElementById("sistema")
+        .classList.remove("escondido");
 
 
 
-        document.getElementById("empresaLogada").innerHTML =
-        "Empresa: " + localStorage.getItem("empresa");
+        document.getElementById("empresaLogada")
+        .innerHTML =
+        "Empresa: " + dados.empresa;
+
+
+
+        abrirPagina("dashboard");
 
 
 
@@ -117,13 +160,10 @@ function login(){
 
         alert("Usuário ou senha incorretos!");
 
-
     }
 
 
 }
-
-
 
 
 
@@ -132,10 +172,18 @@ function login(){
 function sair(){
 
 
-    document.getElementById("sistema").classList.add("escondido");
+    document.getElementById("sistema")
+    .classList.add("escondido");
 
 
-    document.getElementById("login").classList.remove("escondido");
+    document.getElementById("login")
+    .classList.remove("escondido");
+
+
+
+    document.getElementById("usuario").value="";
+
+    document.getElementById("senha").value="";
 
 
 }
